@@ -1,4 +1,4 @@
-const resultHit = hit => `<a class="result-hit">
+const resultHit = (hit, bindEvent ) => `<a class="result-hit">
   <div class="result-hit__image-container">
     <img class="result-hit__image" src="${hit.image}" />
   </div>
@@ -7,8 +7,8 @@ const resultHit = hit => `<a class="result-hit">
     <p class="result-hit__price">$${hit.price}</p>
   </div>
   <div class="result-hit__controls">
-    <button id="view-item" class="result-hit__view">View</button>
-    <button id="add-to-cart" class="result-hit__cart">Add To Cart</button>
+    <button ${bindEvent('click', hit, 'PLP: Product Clicked')} id="view-item" class="result-hit__view">View</button>
+    <button ${bindEvent('conversion', hit, 'PLP: Product Added to Cart')} id="add-to-cart" class="result-hit__cart">Add To Cart</button>
   </div>
 </a>`;
 

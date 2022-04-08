@@ -1,8 +1,16 @@
 import algoliasearch from 'algoliasearch';
 import instantsearch from 'instantsearch.js';
+import { createInsightsMiddleware } from 'instantsearch.js/es/middlewares'
+
 import { searchBox, hits, pagination, refinementList } from 'instantsearch.js/es/widgets';
 
+
 import resultHit from '../templates/result-hit';
+import aa from 'search-insights';
+
+const insightsMiddleware = createInsightsMiddleware({
+  insightsClient: aa,
+});
 
 /**
  * @class ResultsPage
@@ -30,6 +38,14 @@ class ResultPage {
       indexName: process.env.ALGOLIA_INDEX,
       searchClient: this._searchClient,
     });
+
+
+
+
+    this._searchInstance.use(insightsMiddleware);
+
+    aa('setUserToken', 'sw-demo-user');
+
   }
 
   /**
@@ -53,11 +69,21 @@ class ResultPage {
       }),
       refinementList({
         container: '#brand-facet',
-        attribute: 'brand',
+        attribute: 'brand', 
+        sortBy: ['name:asc'],
       }),
       refinementList({
         container: '#categories-facet',
         attribute: 'categories',
+        sortBy: ['count:desc'],
+      }),
+      refinementList({
+        container: '#price_range-facet',
+        attribute: 'price_range',
+      }),
+      refinementList({
+        container: '#rating-facet',
+        attribute: 'rating',
       }),
     ]);
   }
@@ -67,9 +93,8 @@ class ResultPage {
    * Starts instant search after widgets are registered
    * @return {void}
    */
-  _startSearch() {
+   _startSearch() {
     this._searchInstance.start();
   }
 }
-
 export default ResultPage;

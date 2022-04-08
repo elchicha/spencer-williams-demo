@@ -21,3 +21,6 @@ yarn-error.log*
 .vscode
 
 .parcel-cache
+
+/pyenv
+questions/replies.txt

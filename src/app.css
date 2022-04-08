@@ -102,7 +102,7 @@
 }
 
 .result-hit > * {
-  pointer-events: none
+  pointer-events: auto;
 }
 
 #searchbox {
